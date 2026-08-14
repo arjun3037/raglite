@@ -4,8 +4,13 @@ server:
 spring:
   application:
     name: raglite
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/raglite}
+    username: ${SPRING_DATASOURCE_USERNAME:raglite}
+    password: ${SPRING_DATASOURCE_PASSWORD:raglite}
 
 openai:
+  api-key: ${OPENAI_API_KEY:}
   embedding-model: text-embedding-3-small
   chat-model: gpt-4o-mini
 
