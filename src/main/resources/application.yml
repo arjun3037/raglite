@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: raglite
+
+openai:
+  embedding-model: text-embedding-3-small
+  chat-model: gpt-4o-mini
+
+raglite:
+  chunking:
+    chunk-size: 800
+    chunk-overlap: 100
+  retrieval:
+    top-k: 5
+  chat:
+    max-context-tokens: 4000
+
+logging:
+  level:
+    com.raglite: INFO

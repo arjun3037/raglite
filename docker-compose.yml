@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: raglite-postgres
+    environment:
+      POSTGRES_DB: raglite
+      POSTGRES_USER: raglite
+      POSTGRES_PASSWORD: raglite
+    ports:
+      - "5432:5432"
+    volumes:
+      - raglite-pgdata:/var/lib/postgresql/data
+
+volumes:
+  raglite-pgdata:
