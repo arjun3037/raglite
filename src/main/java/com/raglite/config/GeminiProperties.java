@@ -1,6 +1,8 @@
 package com.raglite.config;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -9,10 +11,11 @@ import org.springframework.validation.annotation.Validated;
  * (NFR-3) rather than surfacing as an NPE on the first request.
  */
 @Validated
-@ConfigurationProperties(prefix = "openai")
-public record OpenAiProperties(
+@ConfigurationProperties(prefix = "gemini")
+public record GeminiProperties(
         @NotBlank String apiKey,
         @NotBlank String embeddingModel,
+        @NotNull Integer embeddingDimensions,
         @NotBlank String chatModel
 ) {
 }
