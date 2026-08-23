@@ -24,7 +24,7 @@ stage.
 - Java 25, Spring Boot 4
 - PostgreSQL with the `pgvector` extension
 - Flyway for schema migrations
-- OpenAI for embeddings and chat completions
+- OpenAI or Gemini for embeddings (config-selectable), OpenAI for chat completions
 
 ## Getting started
 
@@ -33,7 +33,7 @@ stage.
 - Java 25+ and Maven
 - A running Postgres instance with the `pgvector` extension (e.g. the `pgvector/pgvector`
   Docker image)
-- An OpenAI API key
+- An API key for your chosen embedding provider (OpenAI or Gemini) and an OpenAI key for chat
 
 ### Configuration
 
@@ -42,6 +42,21 @@ Copy `.env.example` to `.env` and fill in your values:
 ```bash
 cp .env.example .env
 ```
+
+#### Embedding provider
+
+`EMBEDDING_PROVIDER` selects which client handles embeddings — `openai` (default) or `gemini`.
+Only the matching provider's API key is required at startup; the other is ignored.
+
+```bash
+# .env
+EMBEDDING_PROVIDER=gemini
+GEMINI_API_KEY=your-gemini-key-here
+```
+
+Switching providers on a database that already has stored vectors requires re-ingesting —
+different providers produce different embedding dimensions, which breaks similarity search on
+existing rows.
 
 ### Run
 
