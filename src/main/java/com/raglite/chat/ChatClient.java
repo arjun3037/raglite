@@ -1,7 +1,9 @@
 package com.raglite.chat;
 
+import java.util.function.Consumer;
+
 public interface ChatClient {
 
-    // void streamChat(ChatRequest request, StreamCallback callback);
-    // ChatRequest / StreamCallback (SPEC.md §3.2) still need to be designed.
+    void stream(String prompt, Consumer<String> onToken,
+                Consumer<Throwable> onError, Runnable onComplete);
 }

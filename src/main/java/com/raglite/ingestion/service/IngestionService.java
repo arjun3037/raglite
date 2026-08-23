@@ -38,7 +38,7 @@ public class IngestionService {
                 embeddedChunks.add(new EmbeddedChunk(textChunk.content(), embedding, textChunk.tokenCount()));
             } catch (EmbeddingException e) {
                 failed++;
-                log.warn("stage=ingest docId={} event=chunk_embed_failed error={}", docId, e.getMessage());
+                log.warn("stage=ingest docId={} event=chunk_embed_failed error={}", docId, e.getMessage(), e);
             }
         }
 
