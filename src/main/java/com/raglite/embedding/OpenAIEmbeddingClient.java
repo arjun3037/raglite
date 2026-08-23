@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.raglite.config.OpenAiProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
 @Component
+@ConditionalOnProperty(prefix = "embedding", name = "provider", havingValue = "openai", matchIfMissing = true)
 public class OpenAIEmbeddingClient implements EmbeddingClient {
 
     private static final Logger log = LoggerFactory.getLogger(OpenAIEmbeddingClient.class);
