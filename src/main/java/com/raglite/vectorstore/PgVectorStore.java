@@ -23,8 +23,8 @@ public class PgVectorStore implements VectorStore {
     // Cosine distance ("<=>") is what the ivfflat index (SPEC.md §4) is built for;
     // similarity is reported back as 1 - distance.
     private static final String SEARCH_SQL =
-            "SELECT doc_id, content, 1 - (embedding <=> ?) AS similarity "
-                    + "FROM chunk ORDER BY embedding <=> ? LIMIT ?";
+            "SELECT doc_id, content, token_count, 1 - (embedding <=> ?::vector) AS similarity "
+                    + "FROM chunk ORDER BY embedding <=> ?::vector LIMIT ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -67,13 +67,19 @@ public class PgVectorStore implements VectorStore {
     @Override
     public List<RetrievedChunk> search(List<Float> queryVector, int topK) {
         PGvector vector = toPGvector(queryVector);
-        return jdbcTemplate.query(
+        List<RetrievedChunk> results = jdbcTemplate.query(
                 SEARCH_SQL,
                 (rs, rowNum) -> new RetrievedChunk(
                         rs.getString("doc_id"),
                         rs.getString("content"),
-                        rs.getDouble("similarity")),
+                        rs.getDouble("similarity"),
+                        rs.getInt("token_count")),
                 vector, vector, topK);
+
+        log.info("stage=vector_search queryDimensions={} topK={} results={}",
+                queryVector.size(), topK, results.size());
+
+        return results;
     }
 
     private PGvector toPGvector(List<Float> embedding) {
