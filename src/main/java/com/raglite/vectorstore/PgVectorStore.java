@@ -45,7 +45,7 @@ public class PgVectorStore implements VectorStore {
             }
         }
 
-        jdbcTemplate.batchUpdate(INSERT_SQL, new BatchPreparedStatementSetter() {
+         int[] insertedRows = jdbcTemplate.batchUpdate(INSERT_SQL, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(@SuppressWarnings("null") PreparedStatement ps, int index) throws SQLException {
                 EmbeddedChunk chunk = chunks.get(index);
@@ -60,7 +60,8 @@ public class PgVectorStore implements VectorStore {
                 return chunks.size();
             }
         });
-        log.info("stage=vector_store docId={} chunksInserted={}", docId, chunks.size());
+        log.info("stage=vector_store_after_insert sql={} docId={} chunksInserted={} insertedRows={}",
+                INSERT_SQL, docId, chunks.size(), insertedRows);
     }
 
     @Override

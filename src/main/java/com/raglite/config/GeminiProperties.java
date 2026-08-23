@@ -1,9 +1,11 @@
 package com.raglite.config;
 
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Binds to {@code gemini.*}. Only required when {@code embedding.provider=gemini}
@@ -14,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "gemini")
 public record GeminiProperties(
         @NotBlank String apiKey,
-        @NotBlank String embeddingModel
+        @NotBlank String embeddingModel,
+        @NotNull Integer embeddingDimensions,
+        @NotBlank String chatModel
 ) {
 }

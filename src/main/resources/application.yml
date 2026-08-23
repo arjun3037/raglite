@@ -11,7 +11,7 @@ spring:
 
 embedding:
   # Possible values: openai, gemini
-  provider: ${EMBEDDING_PROVIDER:openai}
+  provider: ${EMBEDDING_PROVIDER:gemini}
 
 openai:
   api-key: ${OPENAI_API_KEY:}
@@ -21,6 +21,8 @@ openai:
 gemini:
   api-key: ${GEMINI_API_KEY:}
   embedding-model: gemini-embedding-001
+  embedding-dimensions: 1536
+  chat-model: gemini-2.5-flash
 
 raglite:
   chunking:
